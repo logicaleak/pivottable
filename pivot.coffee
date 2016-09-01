@@ -721,8 +721,12 @@ callWithJQuery ($) ->
 
             aggregator = $("<select>").addClass('pvtAggregator')
                 .bind "change", -> refresh() #capture reference
+            #ozumchange
             for own x of opts.aggregators
-                aggregator.append $("<option>").val(x).html(x)
+                if inputOpts.aggregatorName == x
+                    aggregator.append $("<option selected>").val(x).html(x)
+                else
+                    aggregator.append $("<option>").val(x).html(x)
 
             $("<td>").addClass('pvtVals')
               .appendTo(tr1)
@@ -806,6 +810,8 @@ callWithJQuery ($) ->
                         i++
                     initialRender = false
 
+                vals.push(inputOpts.aggregatedValue)
+                
                 subopts.aggregatorName = aggregator.val()
                 subopts.vals = vals
                 subopts.aggregator = opts.aggregators[aggregator.val()](vals)

@@ -1198,7 +1198,11 @@
         ref2 = opts.aggregators;
         for (x in ref2) {
           if (!hasProp.call(ref2, x)) continue;
-          aggregator.append($("<option>").val(x).html(x));
+          if (inputOpts.aggregatorName === x) {
+            aggregator.append($("<option selected>").val(x).html(x));
+          } else {
+            aggregator.append($("<option>").val(x).html(x));
+          }
         }
         $("<td>").addClass('pvtVals').appendTo(tr1).append(aggregator).append($("<br>"));
         $("<td>").addClass('pvtAxisContainer pvtHorizList pvtCols').appendTo(tr1);
@@ -1281,6 +1285,7 @@
               });
               initialRender = false;
             }
+            vals.push(inputOpts.aggregatedValue);
             subopts.aggregatorName = aggregator.val();
             subopts.vals = vals;
             subopts.aggregator = opts.aggregators[aggregator.val()](vals);
